@@ -17,5 +17,6 @@ module.exports = {
     },
     swagger: {
         path: '/api-docs'
-    }
+    },
+    databaseURL: process.env.DATABASE_URL
 }
