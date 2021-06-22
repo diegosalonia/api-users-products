@@ -1,7 +1,10 @@
-const { check, validationResult } = require('express-validator');
+
+const { check } = require('express-validator');
 const AppError = require('../../errors/appError');
 const userService = require('../../service/userService');
 const { ROLES } = require('../../constants');
+const { validationResult } = require('../commons')
+const logger = require('../../loaders/logger')
 
 const _nameRequired = check('name', 'Name required').not().isEmpty();
 const _lastNameRequired = check('lastName', 'Last Name required').not().isEmpty();
@@ -63,7 +66,7 @@ const postRequestValidation = [
     _passwordRequired,
     _roleValid,
     _dateValid,
-    _validationResult,
+    validationResult,
 ]
 
 const putRequestValidation = [
@@ -74,7 +77,7 @@ const putRequestValidation = [
     _optionalEmailValid,
     _roleValid,
     _dateValid,
-    _validationResult,
+    validationResult,
 ]
 
 module.exports = {
