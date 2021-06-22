@@ -2,8 +2,9 @@
 const { check } = require('express-validator');
 const AppError = require('../../errors/appError');
 const userService = require('../../service/userService');
-const { ROLES } = require('../../constants');
+const { ROLES, ADMIN_ROLE } = require('../../constants');
 const { validationResult } = require('../commons')
+const { validJWT, hasRole } = require('../auth')
 const logger = require('../../loaders/logger')
 
 const _nameRequired = check('name', 'Name required').not().isEmpty();
@@ -42,7 +43,7 @@ const _idIsMongoDB = check('id').isMongoId();
 const _idExist = check('id').custom(
     async (id = '') => {
         const userFound = await userService.findById(id);
-        if(userFound) {
+        if(!userFound) {
             throw new AppError('The id doesn\'t exist in the DB', 400)
         }
     }
@@ -58,6 +59,8 @@ const _validationResult = (req, res, next) => {
 }
 
 const postRequestValidation = [
+    validJWT,
+    hasRole(ADMIN_ROLE),
     _nameRequired,
     _lastNameRequired,
     _emailRequired,
@@ -70,6 +73,8 @@ const postRequestValidation = [
 ]
 
 const putRequestValidation = [
+    validJWT,
+    hasRole(ADMIN_ROLE),
     _idRequired,
     _idIsMongoDB,
     _idExist,
@@ -80,7 +85,32 @@ const putRequestValidation = [
     validationResult,
 ]
 
+const deleteRequestValidations = [
+    validJWT,
+    hasRole(ADMIN_ROLE),
+    _idRequired,
+    _idIsMongoDB,
+    _idExist,
+    validationResult
+]
+
+const getAllRequestValidation = [
+    validJWT
+]
+
+const getRequestValidation = [
+    validJWT,
+    _idRequired,
+    _idIsMongoDB,
+    _idExist,
+    validationResult
+]
+
+
 module.exports = {
     postRequestValidation,
-    putRequestValidation
+    putRequestValidation,
+    getAllRequestValidation,
+    getRequestValidation,
+    deleteRequestValidations
 }
