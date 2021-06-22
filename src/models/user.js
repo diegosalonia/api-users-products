@@ -9,7 +9,7 @@ const userSchema = new Schema(
       type: String,
       required: [true, 'Name required']
     },
-    lastaName: { 
+    lastName: { 
       type: String,
       required: [true, 'Last Name required']
     },
