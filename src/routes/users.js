@@ -6,7 +6,7 @@ const {
     getAllRequestValidation,
     getRequestValidation,
     deleteRequestValidations
- } = require('../middlewares/users');
+ } = require('../..');
 const router = Router()
 
 router.get('/', getAllRequestValidation, getAllUsers);

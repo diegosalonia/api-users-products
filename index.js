@@ -1,11 +1,11 @@
 
 const { check } = require('express-validator');
-const AppError = require('../../errors/appError');
-const userService = require('../../service/userService');
-const { ROLES, ADMIN_ROLE } = require('../../constants');
-const { validationResult } = require('../commons')
-const { validJWT, hasRole } = require('../auth')
-const logger = require('../../loaders/logger')
+const AppError = require('./src/errors/appError');
+const userService = require('./src/service/userService');
+const { ROLES, ADMIN_ROLE } = require('./src/constants');
+const { validationResult } = require('./src/middlewares/commons')
+const { validJWT, hasRole } = require('./src/middlewares/auth')
+const logger = require('./src/loaders/logger')
 
 const _nameRequired = check('name', 'Name required').not().isEmpty();
 const _lastNameRequired = check('lastName', 'Last Name required').not().isEmpty();
