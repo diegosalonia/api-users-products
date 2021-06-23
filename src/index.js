@@ -1,9 +1,5 @@
 const startServer = async () => {
-    require('./loaders')();
-}
+  require("./loaders")();
+};
 
-startServer()
-
-
-
-
+startServer();
